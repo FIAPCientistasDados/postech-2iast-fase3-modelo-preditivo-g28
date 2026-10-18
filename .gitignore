@@ -11,6 +11,7 @@ dados/bronze/
 jobs/tmp/ 
 tmp/
 credenciais/ 
+secrets.py
 
 # =========================
 # Python
