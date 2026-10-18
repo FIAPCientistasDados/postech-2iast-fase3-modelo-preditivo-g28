@@ -1,38 +1,18 @@
-# =========================
-# Build / Compilados
-# =========================
+# Variáveis de ambiente e backups
+.env
+.env.*
+!.env.example
+
+# Credenciais
+*.pem
+*.key
 *.json
-*.log
 
-# =========================
 # Dados gerados
-# =========================
 dados/bronze/
-jobs/tmp/ 
-tmp/
-credenciais/ 
-secrets.py
 
-# =========================
 # Python
-# =========================
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-*.sqlite3
-
-# =========================
-# Databricks / Spark
-# =========================
-logs/
-
-# =========================
-# Credenciais / Secrets
-# =========================
-.env .env.* 
-.env.example credenciais/ 
-*.pem *.key
-
-secrets.py
 
