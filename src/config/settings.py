@@ -19,23 +19,21 @@ def localizar_raiz_projeto() -> Path:
         if (candidato / "src").is_dir():
             return candidato
 
-    if not IS_DATABRICKS:
-        arquivo_atual = Path(__file__).resolve()
+    arquivo_atual = Path(__file__).resolve()
 
-        for candidato in [
-            arquivo_atual.parent,
-            *arquivo_atual.parents,
-        ]:
-            if (candidato / "src").is_dir():
-                return candidato
+    for candidato in [
+        arquivo_atual.parent,
+        *arquivo_atual.parents,
+    ]:
+        if (candidato / "src").is_dir():
+            return candidato
 
     raise FileNotFoundError(
-        "Não foi possível localizar a raiz do projeto. "
-        "A pasta 'src' não foi encontrada."
+        "Não foi possível localizar a raiz do projeto."
     )
 
 
-def exigir_configuracao(
+def carregar_configuracao(
     secret_name: str,
     env_name: str,
 ) -> str:
@@ -45,19 +43,19 @@ def exigir_configuracao(
         required=True,
     )
 
-    valor_normalizado = (
-        str(valor).strip()
-        if valor is not None
-        else ""
-    )
-
-    if not valor_normalizado:
+    if valor is None:
         raise RuntimeError(
-            f"Configuração obrigatória não encontrada: "
-            f"{env_name}"
+            f"Configuração não encontrada: {env_name}"
         )
 
-    return valor_normalizado
+    valor = str(valor).strip()
+
+    if not valor:
+        raise RuntimeError(
+            f"Configuração vazia: {env_name}"
+        )
+
+    return valor
 
 
 ROOT = localizar_raiz_projeto()
@@ -67,29 +65,29 @@ BRONZE_PATH = DADOS_PATH / "bronze"
 SILVER_PATH = DADOS_PATH / "silver"
 GOLD_PATH = DADOS_PATH / "gold"
 
-for diretorio in [
+for caminho in [
     DADOS_PATH,
     BRONZE_PATH,
     SILVER_PATH,
     GOLD_PATH,
 ]:
-    diretorio.mkdir(
+    caminho.mkdir(
         parents=True,
         exist_ok=True,
     )
 
 
-AZURE_STORAGE_ACCOUNT = exigir_configuracao(
+AZURE_STORAGE_ACCOUNT = carregar_configuracao(
     secret_name="AZURE-STORAGE-ACCOUNT",
     env_name="AZURE_STORAGE_ACCOUNT",
 )
 
-AZURE_STORAGE_KEY = exigir_configuracao(
+AZURE_STORAGE_KEY = carregar_configuracao(
     secret_name="AZURE-STORAGE-KEY",
     env_name="AZURE_STORAGE_KEY",
 )
 
-BRONZE_CONTAINER = exigir_configuracao(
+BRONZE_CONTAINER = carregar_configuracao(
     secret_name="AZURE-CONTAINER-BRONZE",
     env_name="AZURE_CONTAINER_BRONZE",
 )
