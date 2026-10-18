@@ -26,7 +26,7 @@ SUBSCRIPTION_ID := e4285dee-2708-4d00-b7a5-9c45f1f37e89
 # Configurações Databricks
 # =========================
 
-DATABRICKS_JOB_PATH := /Workspace/Users/rm374990@fiap.com.br/postech-aisc-fase-2-pipeline-azure-g23/jobs/main.py
+DATABRICKS_JOB_PATH := /Workspace/Users/rm374990@fiap.com.br/postech-2iast-fase-2-pipeline-azure-g23/jobs/main.py
 
 DATABRICKS_JOB_ID := $(SPARK_JOB)
 

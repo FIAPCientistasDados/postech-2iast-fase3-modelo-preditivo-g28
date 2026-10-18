@@ -76,13 +76,13 @@ A camada Gold foi estruturada para servir como base para futuras aplicações de
 3.1 - Clonar repositório
 
 ```
-git clone https://github.com/FIAPCientistasDados/postech-aisc-fase-2-pipeline-azure-g23
+git clone https://github.com/FIAPCientistasDados/postech-2iast-fase-2-pipeline-azure-g23
 ```
 
 3.2 - Acessar a pasta do projeto e instalar as bibliotecas
 
 ```
-cd postech-aisc-fase-2-pipeline-azure-g23
+cd postech-2iast-fase-2-pipeline-azure-g23
 ```
 
 ```
