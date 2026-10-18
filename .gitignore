@@ -3,7 +3,14 @@
 # =========================
 *.json
 *.log
-*.tmp
+
+# =========================
+# Dados gerados
+# =========================
+dados/bronze/
+jobs/tmp/ 
+tmp/
+credenciais/ 
 
 # =========================
 # Python
@@ -22,5 +29,9 @@ logs/
 # =========================
 # Credenciais / Secrets
 # =========================
-.env
+.env .env.* 
+.env.example credenciais/ 
+*.pem *.key
+
+secrets.py
 
