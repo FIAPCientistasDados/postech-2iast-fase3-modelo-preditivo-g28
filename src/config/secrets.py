@@ -5,7 +5,7 @@ from typing import Any, Optional
 KEYVAULT_SCOPE = "kvfiaptechprod"
 
 
-def obter_dbutils() -> Optional[Any\]:
+def obter_dbutils() -> Optional[Any]:
     databricks_utils = globals().get("dbutils")
 
     if databricks_utils is not None:
@@ -32,7 +32,7 @@ def obter_dbutils() -> Optional[Any\]:
 
 def normalizar_valor(
     value: Any,
-) -> Optional[str\]:
+) -> Optional[str]:
     if value is None:
         return None
 
@@ -46,7 +46,7 @@ def get_secret(
     env_name: Optional[str] = None,
     required: bool = False,
     scope: str = KEYVAULT_SCOPE,
-) -> Optional[str\]:
+) -> Optional[str]:
     secret_name = normalizar_valor(
         secret_name
     )
