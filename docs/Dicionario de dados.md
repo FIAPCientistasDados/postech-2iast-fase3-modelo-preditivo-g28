@@ -4,20 +4,20 @@
 
 | Nº | Arquivo | Descrição | Granularidade esperada |
 |---:|---|---|---|
-| 1 | `2026-10-19_uf.parquet` | Resultados agregados de alfabetização por UF | Ano, UF, série e rede |
-| 2 | `2026-10-19_meta_alfabetizacao_brasil.parquet` | Resultados e metas nacionais de alfabetização | Ano e rede |
-| 3 | `2026-10-19_meta_alfabetizacao_uf.parquet` | Resultados e metas de alfabetização por UF | Ano, UF e rede |
-| 4 | `2026-10-19_meta_alfabetizacao_municipio.parquet` | Resultados e metas municipais de alfabetização | Ano, município e rede |
-| 5 | `2026-10-19_municipio.parquet` | Resultados agregados de alfabetização por município | Ano, município, série e rede |
-| 6 | `2026-10-19_alunos.parquet` | Microdados individualizados dos estudantes avaliados | Ano, aluno e aplicação |
-| 7 | `2026-10-19_pib_municipal.json` | Indicadores econômicos municipais | Município, ano, variável e unidade |
-| 8 | `2026-10-19_censo_2022.json` | Indicadores territoriais e demográficos municipais | Município, ano, variável e unidade |
-| 9 | `2026-10-19_ibge_estados.parquet` | Dimensão geográfica de estados e regiões | Estado |
-| 10 | `2026-10-19_ibge_municipios.parquet` | Dimensão geográfica de municípios | Município |
+| 1 | `uf.parquet` | Resultados agregados de alfabetização por UF | Ano, UF, série e rede |
+| 2 | `meta_alfabetizacao_brasil.parquet` | Resultados e metas nacionais de alfabetização | Ano e rede |
+| 3 | `meta_alfabetizacao_uf.parquet` | Resultados e metas de alfabetização por UF | Ano, UF e rede |
+| 4 | `meta_alfabetizacao_municipio.parquet` | Resultados e metas municipais de alfabetização | Ano, município e rede |
+| 5 | `municipio.parquet` | Resultados agregados de alfabetização por município | Ano, município, série e rede |
+| 6 | `alunos.parquet` | Microdados individualizados dos estudantes avaliados | Ano, aluno e aplicação |
+| 7 | `pib_municipal.json` | Indicadores econômicos municipais | Município, ano, variável e unidade |
+| 8 | `censo_2022.json` | Indicadores territoriais e demográficos municipais | Município, ano, variável e unidade |
+| 9 | `ibge_estados.parquet` | Dimensão geográfica de estados e regiões | Estado |
+| 10 | `ibge_municipios.parquet` | Dimensão geográfica de municípios | Município |
 
 ---
 
-## 1. `2026-10-19_uf.parquet`
+## 1. `uf.parquet`
 
 ### Descrição
 
@@ -66,7 +66,7 @@ Uma linha por combinação de:
 
 ---
 
-## 2. `2026-10-19_meta_alfabetizacao_brasil.parquet`
+## 2. `meta_alfabetizacao_brasil.parquet`
 
 ### Descrição
 
@@ -111,7 +111,7 @@ Uma linha por combinação de:
 
 ---
 
-## 3. `2026-10-19_meta_alfabetizacao_uf.parquet`
+## 3. `meta_alfabetizacao_uf.parquet`
 
 ### Descrição
 
@@ -157,7 +157,7 @@ Uma linha por combinação de:
 
 ---
 
-## 4. `2026-10-19_meta_alfabetizacao_municipio.parquet`
+## 4. `meta_alfabetizacao_municipio.parquet`
 
 ### Descrição
 
@@ -204,7 +204,7 @@ Uma linha por combinação de:
 
 ---
 
-## 5. `2026-10-19_municipio.parquet`
+## 5. `municipio.parquet`
 
 ### Descrição
 
@@ -253,7 +253,7 @@ Uma linha por combinação de:
 
 ---
 
-## 6. `2026-10-19_alunos.parquet`
+## 6. `alunos.parquet`
 
 ### Descrição
 
@@ -313,7 +313,7 @@ A unicidade da chave deve ser validada antes da criação da tabela Silver.
 
 ---
 
-## 7. `2026-10-19_pib_municipal.json`
+## 7. `pib_municipal.json`
 
 ### Descrição
 
@@ -361,7 +361,7 @@ Uma linha por combinação de:
 
 ---
 
-## 8. `2026-10-19_censo_2022.json`
+## 8. `censo_2022.json`
 
 ### Descrição
 
@@ -416,7 +416,7 @@ Uma linha por combinação de:
 
 ---
 
-## 9. `2026-10-19_ibge_estados.parquet`
+## 9. `ibge_estados.parquet`
 
 ### Descrição
 
@@ -458,7 +458,7 @@ Uma linha por Unidade da Federação.
 
 ---
 
-## 10. `2026-10-19_ibge_municipios.parquet`
+## 10. `ibge_municipios.parquet`
 
 ### Descrição
 
