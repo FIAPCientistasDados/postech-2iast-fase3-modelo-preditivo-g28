@@ -6,7 +6,6 @@
 # Credenciais
 *.pem
 *.key
-*.json
 
 # Dados gerados
 dados/bronze/
