@@ -1,0 +1,18 @@
+Entrega do Tech Challenge 2IAST - Fase3 - Alfabetização Brasil - Modelo Preditivo (GRUPO28)
+
+---
+
+Integrantes do Grupo 28:
+Célia Maria Tomitsuka - RM374490
+Nelson da Silva Paz - RM374983
+Nelson Toshikazu Yamamoto - RM374494
+
+---
+
+1) Repositório GitHub: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28
+
+2) Apresentação PowerPoint: /home/linux/projetos/0311/postech-2iast-fase3-modelo-preditivo-g28/docs/Tech Challenge - Fase 3.pptx
+
+3) Link do vídeo executivo (5 min): https://www.loom.com/share/f2c5cbf6ebd34c1da2737a9c7b3b9ee7
+
+
