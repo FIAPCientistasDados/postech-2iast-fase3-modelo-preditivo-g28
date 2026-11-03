@@ -1,0 +1,51 @@
+variavel,aumento_erro_medio,desvio,rotulo
+nivel_t1,12.049765840403111,0.15445797275881484,Nivel de alfabetizacao no ano anterior
+indicador_t1,0.48185964318447,0.010584139575858909,Alfabetizados no ano anterior (%)
+ideb_ideb_observado_ultimo,0.16424216078423867,0.009324224944271715,IDEB mais recente
+salto_necessario,0.1323189443565969,0.00635138335813035,Avanco necessario para atingir a meta (p.p.)
+meta_t,0.12276741878107034,0.00621097521657209,Meta do ano-alvo (%)
+participacao_t1,0.11420892849853663,0.004621047986055958,Participacao na avaliacao anterior (%)
+ideb_ideb_nota_matematica_ultimo,0.057770368783181245,0.003895731785552189,Nota de Matematica mais recente
+ideb_ideb_nota_portugues_ultimo,0.051025028879279066,0.005332762271441538,Nota de Portugues mais recente
+ideb_ideb_nota_media_ultimo,0.04877903165791615,0.002676692356574783,Nota media mais recente
+participacao_vab_agro_pct,0.04041968936771836,0.0028616922200574548,Participacao da agropecuaria no PIB (%)
+populacao,0.0346548108841576,0.0010252645635453817,Populacao
+nome_regiao,0.03447002009535076,0.003381989179788456,Regiao
+id_uf,0.030920171398571394,0.0031339479912735804,Id uf
+sigla_uf,0.030159262603055747,0.0038945765706242387,UF
+ideb_ideb_observado_anterior,0.029642305504564082,0.0021565681452826784,IDEB anterior
+pib_mil_reais,0.029584763269118408,0.0023441128000136332,PIB municipal (mil R$)
+nome_uf,0.022656103147468444,0.003299074296082538,Estado
+log_populacao,0.018758510656769013,0.0011541534948414066,Populacao em escala logaritmica
+vab_agro_mil_reais,0.01756701282839428,0.001725943049105798,Vab agro mil reais
+densidade_hab_km2,0.01391436417454699,0.0010803511763572925,Densidade demografica (hab./km²)
+vab_adm_publica_mil_reais,0.013322688284713636,0.0014846226281851598,Vab adm publica mil reais
+pc_nivel_7,0.01294649922333937,0.0009760150479386275,Alunos no nivel socioeconomico 7 (%)
+area_km2,0.01267469735333986,0.0009089405205779414,Area territorial (km²)
+participacao_vab_adm_publica_pct,0.012135326701832306,0.000611080769619658,Participacao da administracao publica no PIB (%)
+media_inse,0.011836203741585916,0.0005910622494608242,Nivel socioeconomico medio (INSE)
+pc_nivel_5,0.011607856153067165,0.0006135440980494342,Alunos no nivel socioeconomico 5 (%)
+ideb_ideb_rendimento_ultimo,0.011443632420261984,0.0018560910464253972,Rendimento do IDEB mais recente
+qtd_alunos_inse,0.01142473551709262,0.0004121813490862854,Alunos considerados no INSE
+pc_nivel_4,0.010847094358998888,0.0012583513476136653,Alunos no nivel socioeconomico 4 (%)
+pc_nivel_2,0.010158365368617606,0.001114347231622341,Alunos no nivel socioeconomico 2 (%)
+vab_industria_mil_reais,0.009679198602914862,0.0005831082048349908,Vab industria mil reais
+participacao_vab_servicos_pct,0.009437633306610316,0.0007839899201529612,Participacao dos servicos no PIB (%)
+vab_servicos_mil_reais,0.009402762085640415,0.000579228910248151,Vab servicos mil reais
+participacao_vab_industria_pct,0.008991994953324766,0.0008457448410213419,Participacao da industria no PIB (%)
+pib_per_capita_reais,0.008110741633158636,0.0005270857673166969,PIB per capita (R$)
+ideb_ideb_observado_variacao,0.008076576744366548,0.0006352382476993694,Variacao recente do IDEB
+pc_nivel_6,0.008066951278424028,0.0005220441323301231,Alunos no nivel socioeconomico 6 (%)
+ideb_aprovacao_ai_pct_ultimo,0.007768889934400569,0.0003875283188758081,Aprovacao nos anos iniciais (%)
+pc_nivel_1,0.007065101103884075,0.0005879684411950054,Alunos no nivel socioeconomico 1 (%)
+pc_nivel_3,0.005825372450095045,0.000649360963252606,Alunos no nivel socioeconomico 3 (%)
+pc_nivel_8,0.004609423837795034,0.0001796370916780874,Alunos no nivel socioeconomico 8 (%)
+ideb_aprovacao_2ano_pct_ultimo,0.004194280638734771,0.0007355217392174506,Aprovacao no 2º ano (%)
+ideb_aprovacao_1ano_pct_ultimo,0.0033265516596459933,0.0003747476118702055,Aprovacao no 1º ano (%)
+ref_ideb,0.0,0.0,Ano de referencia do IDEB
+ano_alvo,0.0,0.0,Ano-alvo
+rede,0.0,0.0,Rede de ensino
+ideb_ideb_meta_ultimo,0.0,0.0,Meta do IDEB mais recente
+ano_referencia,0.0,0.0,Ano referencia
+ano_pib,0.0,0.0,Ano pib
+ano_referencia_inse,0.0,0.0,Ano referencia inse

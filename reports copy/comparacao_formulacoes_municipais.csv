@@ -1,0 +1,3 @@
+,modelo,AUC validação,AUC teste
+classificação direta,logistic_regression,0.8352893632569007,0.7952375597970838
+regressão + meta,random_forest,0.8121167962784899,0.8636928102006297

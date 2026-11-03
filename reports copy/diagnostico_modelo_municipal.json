@@ -1,0 +1,57 @@
+{
+  "modelo": "random_forest",
+  "ano_treino_diagnostico": 2024,
+  "ano_teste_diagnostico": 2025,
+  "linhas_nivel_teste": 5485,
+  "linhas_risco_teste": 5439,
+  "metricas_nivel_teste": {
+    "mae": 3.195988226184108,
+    "rmse": 4.646116761069824,
+    "r2": 0.917750493492505,
+    "vies": -0.25173708012122414,
+    "spearman": 0.963495917574818,
+    "n": 5485
+  },
+  "auc_risco_teste": 0.984526922486711,
+  "limiar_probabilidade_atingir": 0.51,
+  "metricas_operacao": {
+    "validação": {
+      "auc_roc": 0.8118726474055917,
+      "auc_pr": 0.838495203747692,
+      "acuracia": 0.7344305217879185,
+      "precisao": 0.7665989159891599,
+      "recall": 0.7558450233800935,
+      "f1": 0.7611839892364615,
+      "precisao_negativos": 0.6947807933194154,
+      "recall_negativos": 0.7071823204419889,
+      "limiar": 0.51,
+      "taxa_base": 0.5599401533570226,
+      "n": 5347.0
+    },
+    "teste": {
+      "auc_roc": 0.984526922486711,
+      "auc_pr": 0.9942018760222459,
+      "acuracia": 0.9406140834712263,
+      "precisao": 0.9719844357976654,
+      "recall": 0.9457344775365977,
+      "f1": 0.9586798004349494,
+      "precisao_negativos": 0.8642676767676768,
+      "recall_negativos": 0.926878808395396,
+      "limiar": 0.51,
+      "taxa_base": 0.7284427284427284,
+      "n": 5439.0
+    }
+  },
+  "leave_one_uf_out": {
+    "mae": 10.076288336610215,
+    "rmse": 13.052830815011344,
+    "r2": 0.5401413905203074,
+    "vies": 0.6286850126588952,
+    "spearman": 0.725505511102607,
+    "n": 5352,
+    "auc_risco": 0.7177041432347625
+  },
+  "ano_projecao": 2026,
+  "registros_projetados": 5477,
+  "risco_maior_igual_50_pct": 2002
+}

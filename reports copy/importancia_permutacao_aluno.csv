@@ -1,0 +1,54 @@
+variavel,importancia_media,desvio,rotulo
+nivel_t1,0.052844213609927415,0.003140618948418168,Nivel de alfabetizacao no ano anterior
+sigla_uf,0.009648589477950775,0.0015426846356603856,UF
+rede_codigo,0.007920451787900832,0.00028352982539023763,Codigo da rede
+indicador_t1,0.006359070339558477,0.0007399708549909081,Alfabetizados no ano anterior (%)
+media_inse,0.005425714170044153,0.0013675456394814638,Nivel socioeconomico medio (INSE)
+participacao_vab_adm_publica_pct,0.00480229491497397,0.000642822792329206,Participacao da administracao publica no PIB (%)
+pc_nivel_2,0.003917544417220438,0.00012230708973391563,Alunos no nivel socioeconomico 2 (%)
+ideb_ideb_observado_anterior,0.003110762992683943,0.0012003764238178133,IDEB anterior
+participacao_vab_servicos_pct,0.0029509157866130322,0.0017227162211998005,Participacao dos servicos no PIB (%)
+salto_necessario,0.002759462772782643,0.0005048536878129666,Avanco necessario para atingir a meta (p.p.)
+escola_taxa_presenca,0.002710372256415868,0.0012689431151363196,Presenca na avaliacao na escola (%)
+log_populacao,0.001998499163521794,0.001211246082893197,Populacao em escala logaritmica
+meta_t,0.0019375602570936845,0.00019253739473988493,Meta do ano-alvo (%)
+ideb_ideb_nota_matematica_ultimo,0.0019220452296987434,0.0004723278876226066,Nota de Matematica mais recente
+ideb_ideb_nota_media_ultimo,0.00157980554337378,0.0004443838308442566,Nota media mais recente
+pc_nivel_7,0.001252171800807426,0.0004380091817561421,Alunos no nivel socioeconomico 7 (%)
+ideb_ideb_observado_ultimo,0.0011136274546166651,0.0002699489940346911,IDEB mais recente
+pc_nivel_3,0.0010745065554626694,0.0012285990652452566,Alunos no nivel socioeconomico 3 (%)
+area_km2,0.0010248705889140952,2.43432312149727e-05,Area territorial (km²)
+ideb_ideb_nota_portugues_ultimo,0.0009778709649110502,0.000336509497342408,Nota de Portugues mais recente
+rede,0.0008942655731480528,8.021088994739551e-05,Rede de ensino
+densidade_hab_km2,0.00048439006427340264,0.00045004497573484045,Densidade demografica (hab./km²)
+participacao_vab_agro_pct,0.0002622100235318836,0.0002213531519493928,Participacao da agropecuaria no PIB (%)
+participacao_t1,0.0002443616814701288,0.0003545475210062614,Participacao na avaliacao anterior (%)
+ideb_aprovacao_ai_pct_ultimo,0.0002159073636501437,6.606117569941028e-05,Aprovacao nos anos iniciais (%)
+ref_ideb,0.00015651389940396498,0.00037875313592011567,Ano de referencia do IDEB
+pc_nivel_6,0.0001540290707976825,0.0003376809111581131,Alunos no nivel socioeconomico 6 (%)
+pc_nivel_8,1.4727154909984405e-05,5.2363585719656004e-05,Alunos no nivel socioeconomico 8 (%)
+escola_qtd_avaliados,1.2181720728032808e-05,4.4574958067570696e-05,Alunos avaliados na escola
+ano,0.0,0.0,Ano da avaliacao
+tp_serie,0.0,0.0,Serie avaliada
+ideb_ideb_meta_ultimo,0.0,0.0,Meta do IDEB mais recente
+co_uf,-5.7575296974106864e-06,5.5775242555616345e-06,Co uf
+pc_nivel_4,-8.145389382341328e-05,0.000462873256788125,Alunos no nivel socioeconomico 4 (%)
+participacao_vab_industria_pct,-0.00010627187709781143,6.425225816164702e-05,Participacao da industria no PIB (%)
+ideb_aprovacao_2ano_pct_ultimo,-0.00010675672170386748,0.0005038084337309338,Aprovacao no 2º ano (%)
+ano_referencia,-0.00014760487976709738,1.2815249268128521e-05,Ano referencia
+ano_pib,-0.00014760487976709738,1.2815249268128521e-05,Ano pib
+ideb_aprovacao_1ano_pct_ultimo,-0.00015508966837359436,8.83293780286856e-06,Aprovacao no 1º ano (%)
+vab_servicos_mil_reais,-0.00024990709165247554,4.041078720632083e-06,Vab servicos mil reais
+populacao,-0.00026148275662285503,9.734315818425794e-05,Populacao
+escola_qtd_registros,-0.00027420992753272405,0.00026678888008543775,Registros da escola
+pib_mil_reais,-0.00027651293941170313,0.00010675623572267598,PIB municipal (mil R$)
+pc_nivel_1,-0.00040296647323793494,0.0011771846651499435,Alunos no nivel socioeconomico 1 (%)
+ideb_ideb_observado_variacao,-0.0004375419542098635,0.0011366440287628055,Variacao recente do IDEB
+ano_referencia_inse,-0.00045790542766573533,7.114553821368252e-05,Ano referencia inse
+vab_industria_mil_reais,-0.0006008133753112599,0.00010010294701121956,Vab industria mil reais
+pib_per_capita_reais,-0.0008065693050213577,0.00021619287381179712,PIB per capita (R$)
+qtd_alunos_inse,-0.000890265605147896,0.00036930133530473525,Alunos considerados no INSE
+vab_agro_mil_reais,-0.0010078707249130032,0.0002035339844306127,Vab agro mil reais
+pc_nivel_5,-0.0011208092153445204,0.0008318205518777004,Alunos no nivel socioeconomico 5 (%)
+ideb_ideb_rendimento_ultimo,-0.0011454756846794127,0.00046771919507782554,Rendimento do IDEB mais recente
+vab_adm_publica_mil_reais,-0.001526805967370463,0.0002778790564911335,Vab adm publica mil reais

@@ -1,0 +1,22 @@
+# Variáveis de ambiente e backups
+.env
+.env.*
+!.env.example
+
+# Credenciais
+*.pem
+*.key
+
+# Dados gerados
+dados/bronze/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+/data/bronze/
+/data/silver/
+/data/gold/
+
+/images/
