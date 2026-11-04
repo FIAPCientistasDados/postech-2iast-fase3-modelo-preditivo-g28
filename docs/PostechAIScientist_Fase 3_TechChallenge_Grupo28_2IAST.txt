@@ -11,8 +11,9 @@ Nelson Toshikazu Yamamoto - RM374494
 
 1) Repositório GitHub: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28
 
-2) Apresentação PowerPoint: /home/linux/projetos/0311/postech-2iast-fase3-modelo-preditivo-g28/docs/Tech Challenge - Fase 3.pptx
+2) Apresentação PowerPoint: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28/tree/main/docs
+Arquivo: TechChallenge_Fase3.pptx
 
-3) Link do vídeo executivo (5 min): https://www.loom.com/share/f2c5cbf6ebd34c1da2737a9c7b3b9ee7
+3) Link do vídeo executivo (5 min): https://www.loom.com/share/021d3b36611b43ca9d6bd0d188aac385
 
 
