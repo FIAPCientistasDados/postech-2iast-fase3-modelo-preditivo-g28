@@ -521,7 +521,7 @@ O ranking permite ordenar municípios por risco de não atingir a meta e direcio
 ├── models/
 ├── reports/
 ├── images/
-├── tests/
+├── docs/
 ├── environment.yml
 ├── requirements.txt
 ├── README.md
@@ -530,59 +530,714 @@ O ranking permite ordenar municípios por risco de não atingir a meta e direcio
 
 ---
 
-## 17. Como executar
 
-### 17.1 Ambiente Conda
+## 17. Como executar a pipeline do projeto
+
+O arquivo `run_pipeline.py` automatiza as principais etapas de dados e modelagem do projeto:
+
+1. construção da camada Gold;
+2. construção das bases analíticas;
+3. treinamento dos modelos;
+4. execução opcional da etapa de explicabilidade;
+5. validação dos arquivos produzidos.
+
+> Execute todos os comandos desta seção na raiz do repositório.
+
+---
+
+### 1. Pré-requisitos
+
+Antes de iniciar, verifique se estão instalados:
+
+- Git;
+- Python compatível com o projeto;
+- `pip` ou Conda;
+- espaço local suficiente para os arquivos Parquet e os modelos.
+
+Verifique as versões disponíveis:
+
+```bash
+git --version
+python --version
+python -m pip --version
+```
+
+---
+
+### 2. Clonar o repositório
+
+Copie a URL apresentada no botão **Code** do GitHub e execute:
+
+```bash
+git clone https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28
+cd postech-2iast-fase3-modelo-preditivo-g28
+```
+
+---
+
+### 3. Criar o ambiente Python
+
+É recomendável executar o projeto em um ambiente isolado.
+
+#### Opção A: `venv`
+
+No Linux, WSL ou macOS:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+No Windows PowerShell:
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+Atualize o `pip`:
+
+```bash
+python -m pip install --upgrade pip
+```
+
+Instale as dependências:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+#### Opção B: Conda
+
+Se o repositório possuir `environment.yml`:
 
 ```bash
 conda env create -f environment.yml
 conda activate teste_2
 ```
 
-### 17.2 Ambiente pip
+Se o ambiente já existir:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+conda activate teste_2
 ```
 
-### 17.3 Testes
+---
+
+### 4. Verificar o ambiente
+
+Confira o interpretador utilizado:
+
+```bash
+python --version
+python -m pip --version
+```
+
+No Linux, WSL ou macOS:
+
+```bash
+which python
+```
+
+No Windows:
+
+```powershell
+where python
+```
+
+Verifique se o Jupyter está disponível:
+
+```bash
+python -m jupyter --version
+```
+
+Execute os testes do projeto, quando disponíveis:
 
 ```bash
 pytest -q
 ```
 
-### 17.4 Notebooks
+---
 
-Execute os notebooks na ordem numérica. Exemplo:
+### 5. Preparar os dados de entrada
+
+A pasta `data/bronze/` não é versionada no GitHub porque pode conter arquivos grandes e dados brutos. Antes da execução completa, coloque nessa pasta os arquivos exigidos pelos notebooks de construção da Gold.
+
+Estrutura esperada:
+
+```text
+data/
+├── bronze/       # arquivos brutos locais
+├── gold/         # tabelas consolidadas geradas pela pipeline
+└── processed/    # bases analíticas geradas pela pipeline
+```
+
+Se a camada Gold e as bases analíticas já estiverem disponíveis localmente, use os argumentos de execução parcial descritos nas próximas seções.
+
+---
+
+### 6. Executar a pipeline completa
+
+Na raiz do projeto, execute:
 
 ```bash
-jupyter nbconvert \
-  --to notebook \
-  --execute \
-  --inplace \
-  --ExecutePreprocessor.timeout=1800 \
-  notebooks/analysis/01_diagnostico_gold_e_bases_analiticas.ipynb
+python run_pipeline.py
 ```
 
-### 17.5 Git
+A sequência padrão é:
+
+```text
+Camada Bronze
+    ↓
+Camada Silver
+    ↓
+Camada Gold
+    ↓
+Bases analíticas
+    ↓
+Treinamento dos modelos
+    ↓
+Explicabilidade, quando o notebook estiver disponível
+    ↓
+Validação dos artefatos produzidos
+```
+
+A configuração padrão definida no script é:
+
+```text
+alvos: aluno e município
+modelo de aluno: Random Forest
+modelo municipal: Random Forest
+busca de hiperparâmetros: 20 iterações
+amostra máxima de treinamento: 300.000 registros
+timeout por célula: 1.800 segundos
+```
+
+---
+
+### 7. Executar somente parte da pipeline
+
+#### Ignorar a construção da camada Gold
+
+Use quando os arquivos esperados já existirem em `data/gold/`:
 
 ```bash
-git add -A
-git status
-git commit -m "Atualiza entrega do Tech Challenge Fase 3"
-git push origin "$(git branch --show-current)"
+python run_pipeline.py --skip-gold
 ```
 
-O `.gitignore` deve conter:
+#### Ignorar a Gold e as bases analíticas
 
-```gitignore
-/data/bronze/
-__pycache__/
-*.py[cod]
+Use quando `data/gold/` e `data/processed/` já estiverem prontos:
+
+```bash
+python run_pipeline.py \
+  --skip-gold \
+  --skip-processed
 ```
+
+#### Ignorar o treinamento
+
+Use quando os modelos já existirem em `models/`:
+
+```bash
+python run_pipeline.py --skip-train
+```
+
+#### Ignorar a explicabilidade
+
+```bash
+python run_pipeline.py --skip-explainability
+```
+
+#### Executar somente o treinamento
+
+```bash
+python run_pipeline.py \
+  --skip-gold \
+  --skip-processed \
+  --skip-explainability
+```
+
+#### Executar somente as etapas de dados
+
+```bash
+python run_pipeline.py \
+  --skip-train \
+  --skip-explainability
+```
+
+---
+
+### 8. Escolher os alvos e os algoritmos
+
+#### Treinar os dois modelos
+
+```bash
+python run_pipeline.py --alvo todos
+```
+
+#### Treinar somente o modelo de aluno
+
+```bash
+python run_pipeline.py \
+  --alvo aluno \
+  --skip-explainability
+```
+
+#### Treinar somente o modelo municipal
+
+```bash
+python run_pipeline.py \
+  --alvo municipio \
+  --skip-explainability
+```
+
+#### Definir os algoritmos
+
+```bash
+python run_pipeline.py \
+  --modelo-aluno random_forest \
+  --modelo-municipio random_forest
+```
+
+Exemplo com regressão logística para o modelo de aluno:
+
+```bash
+python run_pipeline.py \
+  --modelo-aluno logistic_regression \
+  --modelo-municipio random_forest
+```
+
+Os nomes aceitos dependem dos estimadores registrados no módulo:
+
+```text
+src/modeling/train_models.py
+```
+
+---
+
+### 9. Ajustar o custo computacional
+
+#### Execução rápida para validar o fluxo
+
+```bash
+python run_pipeline.py \
+  --n-iter 1 \
+  --amostra 50000 \
+  --skip-explainability
+```
+
+Essa opção serve para verificar se o fluxo executa corretamente. Não deve substituir a execução usada para produzir os resultados finais.
+
+#### Execução padrão
+
+```bash
+python run_pipeline.py \
+  --n-iter 20 \
+  --amostra 300000
+```
+
+#### Alterar somente o número de iterações
+
+```bash
+python run_pipeline.py --n-iter 10
+```
+
+#### Alterar somente o tamanho máximo da amostra
+
+```bash
+python run_pipeline.py --amostra 100000
+```
+
+#### Aumentar o timeout por célula
+
+```bash
+python run_pipeline.py --notebook-timeout 3600
+```
+
+O valor é informado em segundos. Nesse exemplo, cada célula pode executar por até uma hora.
+
+---
+
+### 10. Consultar todos os argumentos
+
+```bash
+python run_pipeline.py --help
+```
+
+| Argumento | Descrição |
+|---|---|
+| `--alvo` | Escolhe `aluno`, `municipio` ou `todos` |
+| `--modelo-aluno` | Define o algoritmo do modelo de aluno |
+| `--modelo-municipio` | Define o algoritmo do modelo municipal |
+| `--n-iter` | Define a quantidade de combinações da busca |
+| `--amostra` | Define o limite da amostra de treinamento |
+| `--notebook-timeout` | Define o tempo máximo por célula, em segundos |
+| `--skip-gold` | Não reconstrói a camada Gold |
+| `--skip-processed` | Não reconstrói as bases analíticas |
+| `--skip-train` | Não treina os modelos |
+| `--skip-explainability` | Não executa a etapa de explicabilidade |
+
+---
+
+### 11. Arquivos validados pela pipeline
+
+#### Camada Gold
+
+Após a execução do notebook da Gold, o script verifica os seguintes arquivos:
+
+```text
+data/gold/
+├── fato_aluno.parquet
+├── contexto_municipio.parquet
+├── ideb_municipio.parquet
+├── indicador_municipio.parquet
+└── metas_municipio.parquet
+```
+
+#### Bases analíticas
+
+Após a construção das bases analíticas:
+
+```text
+data/processed/
+├── base_analitica_aluno.parquet
+└── base_analitica_municipio.parquet
+```
+
+#### Modelo de aluno
+
+Quando o alvo inclui `aluno`:
+
+```text
+models/
+├── modelo_aluno.joblib
+├── modelo_aluno.json
+└── modelo_aluno_oof.parquet
+```
+
+#### Modelo municipal
+
+Quando o alvo inclui `municipio`:
+
+```text
+models/
+├── modelo_municipio.joblib
+├── modelo_municipio.json
+└── modelo_municipio_oof.parquet
+```
+
+#### Relatórios
+
+As tabelas e os relatórios produzidos pelas etapas posteriores ficam em:
+
+```text
+reports/
+```
+
+---
+
+### 12. Interpretar a saída do terminal
+
+Durante a execução, o script apresenta mensagens como:
+
+```text
+[etapa] nome da etapa
+[comando] comando executado
+[ok] etapa concluída
+[validacao] arquivos encontrados
+```
+
+Ao final de uma execução bem-sucedida, o terminal deve mostrar:
+
+```text
+[sucesso] Pipeline concluido.
+```
+
+Também são exibidos os diretórios dos artefatos:
+
+```text
+Gold: data/gold
+Processed: data/processed
+Models: models
+Reports: reports
+```
+
+Se um arquivo obrigatório não for produzido, a pipeline termina com `FileNotFoundError`. Se um notebook ou comando retornar erro, a execução também é interrompida, evitando continuar com artefatos incompletos.
+
+---
+
+### 13. Notebooks localizados pelo script
+
+O script procura notebooks a partir das listas:
+
+```python
+GOLD_NOTEBOOK_CANDIDATES
+ANALYTICAL_NOTEBOOK_CANDIDATES
+EXPLAINABILITY_NOTEBOOK_CANDIDATES
+```
+
+Os nomes dos arquivos reais precisam estar registrados nessas listas.
+
+Se os notebooks estiverem em `notebooks/analysis/`, a busca deve considerar tanto `notebooks/` quanto `notebooks/analysis/`:
+
+```python
+def encontrar_notebook(
+    candidatos: tuple[str, ...],
+    obrigatorio: bool,
+) -> Path | None:
+    diretorios = (
+        NOTEBOOKS_DIR,
+        NOTEBOOKS_DIR / "analysis",
+    )
+
+    for diretorio in diretorios:
+        for nome in candidatos:
+            caminho = diretorio / nome
+
+            if caminho.exists():
+                return caminho
+
+    if obrigatorio:
+        procurados = [
+            str(diretorio / nome)
+            for diretorio in diretorios
+            for nome in candidatos
+        ]
+
+        raise FileNotFoundError(
+            "Nenhum notebook encontrado entre:\n"
+            + "\n".join(procurados)
+        )
+
+    return None
+```
+
+Exemplo de atualização da lista de explicabilidade:
+
+```python
+EXPLAINABILITY_NOTEBOOK_CANDIDATES = (
+    "08_interpretabilidade_dos_modelos.ipynb",
+    "06_model_explainability.ipynb",
+    "model_explainability.ipynb",
+    "explicabilidade_modelos.ipynb",
+)
+```
+
+Os nomes reais dos notebooks de construção da Gold e das bases analíticas também devem ser incluídos em suas respectivas listas.
+
+---
+
+### 14. Escopo do `run_pipeline.py`
+
+Na implementação atual, o script executa:
+
+- construção da camada Gold;
+- construção das bases analíticas;
+- treinamento dos modelos;
+- um notebook opcional de explicabilidade;
+- validação dos arquivos obrigatórios.
+
+O script não executa automaticamente todos os notebooks analíticos numerados de 01 a 09. Portanto, o `run_pipeline.py` deve ser descrito como a **pipeline principal de dados e treinamento**.
+
+Caso o objetivo seja executar também toda a análise, uma lista adicional pode ser registrada no script:
+
+```python
+ANALYSIS_NOTEBOOKS = (
+    "01_diagnostico_gold_e_bases_analiticas.ipynb",
+    "02_exploracao_dos_dados.ipynb",
+    "03_hipoteses_e_diretrizes_de_modelagem.ipynb",
+    "04_comparacao_de_formulacoes_municipais.ipynb",
+    "05_diagnostico_e_projecao_do_risco_municipal.ipynb",
+    "06_segmentacao_de_municipios.ipynb",
+    "07_perfis_municipais_e_prioridades.ipynb",
+    "08_interpretabilidade_dos_modelos.ipynb",
+    "09_aplicacao_estrategica_tech_challenge.ipynb",
+)
+```
+
+A lista pode ser percorrida após o treinamento:
+
+```python
+for nome in ANALYSIS_NOTEBOOKS:
+    caminho = NOTEBOOKS_DIR / "analysis" / nome
+    executar_notebook(
+        caminho,
+        timeout_celula=args.notebook_timeout,
+    )
+```
+
+Antes de adotar essa opção, verifique se cada notebook depende apenas dos artefatos gerados nas etapas anteriores.
+
+---
+
+### 15. Solução de problemas
+
+#### O comando `jupyter` não foi encontrado
+
+```bash
+python -m pip install jupyter nbconvert ipykernel
+```
+
+#### Um notebook obrigatório não foi encontrado
+
+Confira:
+
+- o nome real do arquivo;
+- a pasta em que o notebook está salvo;
+- as listas de candidatos em `run_pipeline.py`;
+- se a função de busca considera `notebooks/analysis/`.
+
+#### Uma célula excedeu o tempo máximo
+
+```bash
+python run_pipeline.py --notebook-timeout 3600
+```
+
+#### A camada Gold já existe
+
+```bash
+python run_pipeline.py --skip-gold
+```
+
+#### As bases analíticas já existem
+
+```bash
+python run_pipeline.py \
+  --skip-gold \
+  --skip-processed
+```
+
+#### Os modelos já existem
+
+```bash
+python run_pipeline.py --skip-train
+```
+
+#### Executar uma validação rápida
+
+```bash
+python run_pipeline.py \
+  --n-iter 1 \
+  --amostra 50000 \
+  --skip-explainability
+```
+
+#### Erro de memória durante o treinamento
+
+Reduza a amostra e a quantidade de iterações:
+
+```bash
+python run_pipeline.py \
+  --amostra 50000 \
+  --n-iter 1
+```
+
+Também pode ser útil limitar o paralelismo antes da execução:
+
+```bash
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+```
+
+#### Confirmar que os artefatos foram gerados
+
+```bash
+find data/gold data/processed models reports \
+  -maxdepth 2 \
+  -type f \
+  | sort
+```
+
+---
+
+### 16. Exemplo de execução recomendada
+
+#### Primeira execução completa
+
+```bash
+git clone <URL_DO_REPOSITORIO>
+cd <NOME_DO_REPOSITORIO>
+
+python -m venv .venv
+source .venv/bin/activate
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+
+pytest -q
+python run_pipeline.py
+```
+
+#### Reexecução sem reconstruir os dados
+
+```bash
+source .venv/bin/activate
+
+python run_pipeline.py \
+  --skip-gold \
+  --skip-processed
+```
+
+#### Reexecução apenas das análises, após ajuste do script
+
+```bash
+source .venv/bin/activate
+python run_pipeline.py --skip-gold --skip-processed --skip-train
+```
+
+---
+
+### 17. Resultado esperado
+
+Ao final, o projeto deve conter:
+
+```text
+data/gold/        # camada Gold validada
+data/processed/   # bases analíticas
+models/           # pipelines e metadados dos modelos
+reports/          # rankings, perfis e importâncias
+images/           # gráficos das análises
+```
+
+A execução foi projetada para interromper o fluxo quando uma etapa falha ou quando um artefato obrigatório não é encontrado. Isso evita que as análises posteriores utilizem arquivos ausentes ou incompletos.
+
+---
+
+Entrega do Tech Challenge 2IAST - Fase3 - Alfabetização Brasil - Modelo Preditivo (GRUPO28)
+
+---
+
+Integrantes do Grupo 28:
+Célia Maria Tomitsuka - RM374490
+Nelson da Silva Paz - RM374983
+Nelson Toshikazu Yamamoto - RM374494
+
+---
+
+1) Repositório GitHub: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28
+
+2) Apresentação PowerPoint: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28/tree/main/docs
+Arquivo: TechChallenge_Fase3.pptx
+
+3) Link do vídeo executivo (5 min): https://www.loom.com/share/021d3b36611b43ca9d6bd0d188aac385
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
