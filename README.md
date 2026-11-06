@@ -1,4 +1,4 @@
-## Postech Tech Challenge | Fase 3: 
+## Postech Tech Challenge | Fase 3 | Predição e Inteligência Analítica para Alfabetização no Brasil
 
 **Integrantes do Grupo (2IAST grupo 28):**
 
@@ -44,8 +44,8 @@ O projeto atende aos requisitos do Tech Challenge de análise exploratória, hip
 14. [Limitações](#14-limitações)
 15. [Evoluções futuras](#15-evoluções-futuras)
 16. [Estrutura do repositório](#16-estrutura-do-repositório)
-17. [Como executar](#17-como-executar)
-18. [Entregáveis](#18-entregáveis)
+17. [Como executar a pipeline do projeto](#17-como-executar-a-pipeline-do-projeto)
+18. [Artefatos analíticos](#18-artefatos-analíticos)
 19. [Checklist de conformidade](#19-checklist-de-conformidade)
 
 ---
@@ -80,7 +80,7 @@ Construir uma pipeline reproduzível de Machine Learning capaz de:
 - interpretar as variáveis das quais os modelos dependem;
 - produzir rankings e perfis úteis para priorização de políticas públicas.
 
-O projeto utiliza uma target observada. Alunos ausentes não são classificados automaticamente como não alfabetizados, e a proficiência contemporânea não é usada como feature para prever `alfabetizado`.
+O projeto utiliza uma variável-alvo observada. Alunos ausentes não são classificados automaticamente como não alfabetizados, e a proficiência contemporânea não é usada como feature para prever `alfabetizado`.
 
 ---
 
@@ -382,9 +382,11 @@ Comparação com regras simples:
 
 O desempenho cai quando a UF não aparece no treinamento. O modelo é mais confiável para municípios novos de contextos estaduais já observados.
 
-### 9.3 Nota de consistência dos artefatos
+### 9.3 Nota de consistência técnica
 
-O notebook 09 exibe metadados de uma execução intermediária, com MAE **10,4 p.p.**, RMSE **13,1 p.p.**, R² **0,34**, viés **-8,5 p.p.** e Spearman **0,82**. O notebook 05 contém a avaliação final mais recente, com MAE **3,2 p.p.** e AUC **0,985**. Antes da entrega definitiva, o notebook 09 deve ser regenerado com o mesmo artefato final para eliminar essa divergência documental.
+Os resultados consolidados neste README utilizam como referência a avaliação temporal final do modelo municipal. Para garantir a reprodutibilidade, os notebooks e relatórios posteriores devem ser atualizados a partir dos mesmos modelos e metadados armazenados nas pastas models/ e reports/.
+
+Uma nova execução de treinamento requer a regeneração dos diagnósticos, das análises de interpretabilidade e das respostas estratégicas.
 
 ---
 
@@ -475,7 +477,7 @@ O ranking permite ordenar municípios por risco de não atingir a meta e direcio
 - risco de mudanças de patamar entre anos;
 - agrupamentos com fronteiras difusas;
 - importância preditiva não representa causalidade;
-- divergência documental entre os artefatos mostrados nos notebooks 05 e 09;
+- necessidade de sincronizar os artefatos derivados após cada novo treinamento;
 - reconciliação Gold com MAE de 0,317 p.p. e caso extremo ainda em investigação.
 
 ---
@@ -501,9 +503,24 @@ O ranking permite ordenar municípios por risco de não atingir a meta e direcio
 ├── data/
 │   ├── bronze/                 # dados brutos locais, fora do Git
 │   ├── gold/                   # camada Gold
-│   └── processed/              # bases analíticas
+│   ├── processed/              # bases analíticas
+│   └── silver/                 # dados transfomados, fora do Git
+├── docs/
+│   ├── [IAST] - Tech Challenge - Fase 3.pdf                
+│   ├── Dicionario_Dados.md
+│   ├── PostechAIScientist_Fase 3_TechChallenge_Grupo28_2IAST.txt          
+│   └── TechChallenge_Fase3.pptx
+├── images/                      # pasta com imagens geradas na execução
+├── modeling_adaptado/
+│   ├── model_registry.py          
+│   └── train_models.py
+├── models/                       # pasta com vários arquivos gerados na execução
 ├── notebooks/
-│   └── analysis/
+│   ├── 01_extracao_bronze.ipynb                
+│   ├── 02_build_silver_local.ipynb 
+│   ├── 03_gold_raw.ipynb           
+│   ├── 04_gold_base_analitica.ipynb 
+│   └──  analysis/
 │       ├── 01_diagnostico_gold_e_bases_analiticas.ipynb
 │       ├── 02_exploracao_dos_dados.ipynb
 │       ├── 03_hipoteses_e_diretrizes_de_modelagem.ipynb
@@ -513,15 +530,14 @@ O ranking permite ordenar municípios por risco de não atingir a meta e direcio
 │       ├── 07_perfis_municipais_e_prioridades.ipynb
 │       ├── 08_interpretabilidade_dos_modelos.ipynb
 │       └── 09_aplicacao_estrategica_tech_challenge.ipynb
+├── reports/                # pasta com vários resultados gerados na execução
 ├── src/
-│   ├── preprocessing/
-│   ├── modeling/
+│   ├── config/
 │   ├── evaluation/
+│   ├── modeling/
+│   ├── preprocessing/
 │   └── visualization/
-├── models/
-├── reports/
-├── images/
-├── docs/
+├── run_pipeline.py
 ├── environment.yml
 ├── requirements.txt
 ├── README.md
@@ -533,19 +549,34 @@ O ranking permite ordenar municípios por risco de não atingir a meta e direcio
 
 ## 17. Como executar a pipeline do projeto
 
+Rodar os notebooks na ordem:
+1. construção da camada Bronze;
+2. construção das bases Silver;
+3. construção da camada Gold;
+4. construção das bases analíticas;
+
 O arquivo `run_pipeline.py` automatiza as principais etapas de dados e modelagem do projeto:
 
-1. construção da camada Gold;
-2. construção das bases analíticas;
-3. treinamento dos modelos;
-4. execução opcional da etapa de explicabilidade;
-5. validação dos arquivos produzidos.
+1. treinamento dos modelos;
+2. execução opcional da etapa de explicabilidade;
+3. validação dos arquivos produzidos.
 
-> Execute todos os comandos desta seção na raiz do repositório.
+> Execute o comando `run_pipeline.py` na raiz do repositório.
+
+Depois execute todos os notebooks da pasta notebooks/analysis
+01_diagnostico_gold_e_bases_analiticas.ipynb
+02_exploracao_dos_dados.ipynb
+03_hipoteses_e_diretrizes_de_modelagem.ipynb
+04_comparacao_de_formulacoes_municipais.ipynb
+05_diagnostico_e_projecao_do_risco_municipal.ipynb
+06_segmentacao_de_municipios.ipynb
+07_perfis_municipais_e_prioridades.ipynb
+08_interpretabilidade_dos_modelos.ipynb
+09_aplicacao_estrategica_tech_challenge.ipynb
 
 ---
 
-### 1. Pré-requisitos
+### 17.1 Pré-requisitos
 
 Antes de iniciar, verifique se estão instalados:
 
@@ -564,7 +595,7 @@ python -m pip --version
 
 ---
 
-### 2. Clonar o repositório
+### 17.2 Clonar o repositório
 
 Copie a URL apresentada no botão **Code** do GitHub e execute:
 
@@ -575,7 +606,7 @@ cd postech-2iast-fase3-modelo-preditivo-g28
 
 ---
 
-### 3. Criar o ambiente Python
+### 17.3 Criar o ambiente Python
 
 É recomendável executar o projeto em um ambiente isolado.
 
@@ -624,7 +655,7 @@ conda activate teste_2
 
 ---
 
-### 4. Verificar o ambiente
+### 17.4 Verificar o ambiente
 
 Confira o interpretador utilizado:
 
@@ -659,7 +690,7 @@ pytest -q
 
 ---
 
-### 5. Preparar os dados de entrada
+### 17.5 Preparar os dados de entrada
 
 A pasta `data/bronze/` não é versionada no GitHub porque pode conter arquivos grandes e dados brutos. Antes da execução completa, coloque nessa pasta os arquivos exigidos pelos notebooks de construção da Gold.
 
@@ -668,6 +699,7 @@ Estrutura esperada:
 ```text
 data/
 ├── bronze/       # arquivos brutos locais
+├── silver/       # arquivos transformados
 ├── gold/         # tabelas consolidadas geradas pela pipeline
 └── processed/    # bases analíticas geradas pela pipeline
 ```
@@ -676,7 +708,19 @@ Se a camada Gold e as bases analíticas já estiverem disponíveis localmente, u
 
 ---
 
-### 6. Executar a pipeline completa
+### 17.6 Executar a pipeline completa
+
+Execute os notebooks na sequência:
+```text
+Camada Bronze (notebooks/01_extracao_bronze.ipynb)
+    ↓
+Camada Silver (notebooks/02_build_silver_local.ipynb)
+    ↓
+Camada Gold (notebooks/03_gold_raw.ipynb)
+    ↓
+Bases analíticas (notebooks/04_gold_base_analitica.ipynb)
+
+```
 
 Na raiz do projeto, execute:
 
@@ -687,14 +731,6 @@ python run_pipeline.py
 A sequência padrão é:
 
 ```text
-Camada Bronze
-    ↓
-Camada Silver
-    ↓
-Camada Gold
-    ↓
-Bases analíticas
-    ↓
 Treinamento dos modelos
     ↓
 Explicabilidade, quando o notebook estiver disponível
@@ -713,27 +749,30 @@ amostra máxima de treinamento: 300.000 registros
 timeout por célula: 1.800 segundos
 ```
 
+Execute os notebooks da pasta analysis na sequência:
+```text
+01_diagnostico_gold_e_bases_analiticas.ipynb
+    ↓
+02_exploracao_dos_dados.ipynb
+    ↓
+03_hipoteses_e_diretrizes_de_modelagem.ipynb
+    ↓
+04_comparacao_de_formulacoes_municipais.ipynb
+    ↓
+05_diagnostico_e_projecao_do_risco_municipal.ipynb
+    ↓
+06_segmentacao_de_municipios.ipynb
+    ↓
+07_perfis_municipais_e_prioridades.ipynb
+    ↓
+08_interpretabilidade_dos_modelos.ipynb
+    ↓
+09_aplicacao_estrategica_tech_challenge.ipynb
+```
+
 ---
 
-### 7. Executar somente parte da pipeline
-
-#### Ignorar a construção da camada Gold
-
-Use quando os arquivos esperados já existirem em `data/gold/`:
-
-```bash
-python run_pipeline.py --skip-gold
-```
-
-#### Ignorar a Gold e as bases analíticas
-
-Use quando `data/gold/` e `data/processed/` já estiverem prontos:
-
-```bash
-python run_pipeline.py \
-  --skip-gold \
-  --skip-processed
-```
+### 17.7 Executar somente parte da pipeline
 
 #### Ignorar o treinamento
 
@@ -743,32 +782,8 @@ Use quando os modelos já existirem em `models/`:
 python run_pipeline.py --skip-train
 ```
 
-#### Ignorar a explicabilidade
 
-```bash
-python run_pipeline.py --skip-explainability
-```
-
-#### Executar somente o treinamento
-
-```bash
-python run_pipeline.py \
-  --skip-gold \
-  --skip-processed \
-  --skip-explainability
-```
-
-#### Executar somente as etapas de dados
-
-```bash
-python run_pipeline.py \
-  --skip-train \
-  --skip-explainability
-```
-
----
-
-### 8. Escolher os alvos e os algoritmos
+### 17.8 Escolher os alvos e os algoritmos
 
 #### Treinar os dois modelos
 
@@ -816,7 +831,7 @@ src/modeling/train_models.py
 
 ---
 
-### 9. Ajustar o custo computacional
+### 17.9 Ajustar o custo computacional
 
 #### Execução rápida para validar o fluxo
 
@@ -859,7 +874,7 @@ O valor é informado em segundos. Nesse exemplo, cada célula pode executar por 
 
 ---
 
-### 10. Consultar todos os argumentos
+### 17.10 Consultar todos os argumentos
 
 ```bash
 python run_pipeline.py --help
@@ -873,14 +888,12 @@ python run_pipeline.py --help
 | `--n-iter` | Define a quantidade de combinações da busca |
 | `--amostra` | Define o limite da amostra de treinamento |
 | `--notebook-timeout` | Define o tempo máximo por célula, em segundos |
-| `--skip-gold` | Não reconstrói a camada Gold |
-| `--skip-processed` | Não reconstrói as bases analíticas |
 | `--skip-train` | Não treina os modelos |
 | `--skip-explainability` | Não executa a etapa de explicabilidade |
 
 ---
 
-### 11. Arquivos validados pela pipeline
+### 17.11 Arquivos validados pela pipeline
 
 #### Camada Gold
 
@@ -937,141 +950,7 @@ reports/
 
 ---
 
-### 12. Interpretar a saída do terminal
-
-Durante a execução, o script apresenta mensagens como:
-
-```text
-[etapa] nome da etapa
-[comando] comando executado
-[ok] etapa concluída
-[validacao] arquivos encontrados
-```
-
-Ao final de uma execução bem-sucedida, o terminal deve mostrar:
-
-```text
-[sucesso] Pipeline concluido.
-```
-
-Também são exibidos os diretórios dos artefatos:
-
-```text
-Gold: data/gold
-Processed: data/processed
-Models: models
-Reports: reports
-```
-
-Se um arquivo obrigatório não for produzido, a pipeline termina com `FileNotFoundError`. Se um notebook ou comando retornar erro, a execução também é interrompida, evitando continuar com artefatos incompletos.
-
----
-
-### 13. Notebooks localizados pelo script
-
-O script procura notebooks a partir das listas:
-
-```python
-GOLD_NOTEBOOK_CANDIDATES
-ANALYTICAL_NOTEBOOK_CANDIDATES
-EXPLAINABILITY_NOTEBOOK_CANDIDATES
-```
-
-Os nomes dos arquivos reais precisam estar registrados nessas listas.
-
-Se os notebooks estiverem em `notebooks/analysis/`, a busca deve considerar tanto `notebooks/` quanto `notebooks/analysis/`:
-
-```python
-def encontrar_notebook(
-    candidatos: tuple[str, ...],
-    obrigatorio: bool,
-) -> Path | None:
-    diretorios = (
-        NOTEBOOKS_DIR,
-        NOTEBOOKS_DIR / "analysis",
-    )
-
-    for diretorio in diretorios:
-        for nome in candidatos:
-            caminho = diretorio / nome
-
-            if caminho.exists():
-                return caminho
-
-    if obrigatorio:
-        procurados = [
-            str(diretorio / nome)
-            for diretorio in diretorios
-            for nome in candidatos
-        ]
-
-        raise FileNotFoundError(
-            "Nenhum notebook encontrado entre:\n"
-            + "\n".join(procurados)
-        )
-
-    return None
-```
-
-Exemplo de atualização da lista de explicabilidade:
-
-```python
-EXPLAINABILITY_NOTEBOOK_CANDIDATES = (
-    "08_interpretabilidade_dos_modelos.ipynb",
-    "06_model_explainability.ipynb",
-    "model_explainability.ipynb",
-    "explicabilidade_modelos.ipynb",
-)
-```
-
-Os nomes reais dos notebooks de construção da Gold e das bases analíticas também devem ser incluídos em suas respectivas listas.
-
----
-
-### 14. Escopo do `run_pipeline.py`
-
-Na implementação atual, o script executa:
-
-- construção da camada Gold;
-- construção das bases analíticas;
-- treinamento dos modelos;
-- um notebook opcional de explicabilidade;
-- validação dos arquivos obrigatórios.
-
-O script não executa automaticamente todos os notebooks analíticos numerados de 01 a 09. Portanto, o `run_pipeline.py` deve ser descrito como a **pipeline principal de dados e treinamento**.
-
-Caso o objetivo seja executar também toda a análise, uma lista adicional pode ser registrada no script:
-
-```python
-ANALYSIS_NOTEBOOKS = (
-    "01_diagnostico_gold_e_bases_analiticas.ipynb",
-    "02_exploracao_dos_dados.ipynb",
-    "03_hipoteses_e_diretrizes_de_modelagem.ipynb",
-    "04_comparacao_de_formulacoes_municipais.ipynb",
-    "05_diagnostico_e_projecao_do_risco_municipal.ipynb",
-    "06_segmentacao_de_municipios.ipynb",
-    "07_perfis_municipais_e_prioridades.ipynb",
-    "08_interpretabilidade_dos_modelos.ipynb",
-    "09_aplicacao_estrategica_tech_challenge.ipynb",
-)
-```
-
-A lista pode ser percorrida após o treinamento:
-
-```python
-for nome in ANALYSIS_NOTEBOOKS:
-    caminho = NOTEBOOKS_DIR / "analysis" / nome
-    executar_notebook(
-        caminho,
-        timeout_celula=args.notebook_timeout,
-    )
-```
-
-Antes de adotar essa opção, verifique se cada notebook depende apenas dos artefatos gerados nas etapas anteriores.
-
----
-
-### 15. Solução de problemas
+### 17.12 Solução de problemas
 
 #### O comando `jupyter` não foi encontrado
 
@@ -1092,20 +971,6 @@ Confira:
 
 ```bash
 python run_pipeline.py --notebook-timeout 3600
-```
-
-#### A camada Gold já existe
-
-```bash
-python run_pipeline.py --skip-gold
-```
-
-#### As bases analíticas já existem
-
-```bash
-python run_pipeline.py \
-  --skip-gold \
-  --skip-processed
 ```
 
 #### Os modelos já existem
@@ -1153,7 +1018,7 @@ find data/gold data/processed models reports \
 
 ---
 
-### 16. Exemplo de execução recomendada
+### 17.13 Exemplo de execução recomendada
 
 #### Primeira execução completa
 
@@ -1171,26 +1036,24 @@ pytest -q
 python run_pipeline.py
 ```
 
-#### Reexecução sem reconstruir os dados
+#### Reexecução
 
 ```bash
 source .venv/bin/activate
 
-python run_pipeline.py \
-  --skip-gold \
-  --skip-processed
+python run_pipeline.py
 ```
 
-#### Reexecução apenas das análises, após ajuste do script
+#### Reexecução da explicabilidade sem novo treinamento
 
 ```bash
 source .venv/bin/activate
-python run_pipeline.py --skip-gold --skip-processed --skip-train
+python run_pipeline.py --skip-train
 ```
 
 ---
 
-### 17. Resultado esperado
+### 17.14 Resultado esperado
 
 Ao final, o projeto deve conter:
 
@@ -1206,65 +1069,55 @@ A execução foi projetada para interromper o fluxo quando uma etapa falha ou qu
 
 ---
 
-Entrega do Tech Challenge 2IAST - Fase3 - Alfabetização Brasil - Modelo Preditivo (GRUPO28)
+## 18. Artefatos analíticos
 
----
+Os arquivos em CSV são destinados à consulta e auditoria; os Parquets preservam tipos e agilizam a pipeline; os JSONs armazenam métricas e metadados estruturados.
 
-Integrantes do Grupo 28:
-Célia Maria Tomitsuka - RM374490
-Nelson da Silva Paz - RM374983
-Nelson Toshikazu Yamamoto - RM374494
+### 18.1 Comparação e diagnóstico dos modelos
 
----
+| Arquivo | Conteúdo | Notebook |
+|---|---|---:|
+| `reports/comparacao_formulacoes_municipais.csv` | Comparação entre classificação direta, regressão e risco derivado | 04 |
+| `reports/comparacao_formulacoes_municipais.json` | Métricas e configurações estruturadas da comparação | 04 |
+| `reports/diagnostico_modelo_municipal.json` | Métricas e parâmetros do modelo municipal avaliado | 05 |
+| `reports/robustez_modelo_vs_regras.csv` | Comparação do modelo com regras simples | 05 |
 
-1) Repositório GitHub: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28
+### 18.2 Ranking e risco municipal
 
-2) Apresentação PowerPoint: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28/tree/main/docs
-Arquivo: TechChallenge_Fase3.pptx
+| Arquivo | Conteúdo | Notebook |
+|---|---|---:|
+| `reports/municipios_risco_2026.csv` | Ranking dos 5.477 municípios pelo risco de não atingir a meta | 05 |
+| `reports/estabilidade_lista_2026.csv` | Frequência de permanência de cada município na lista após reamostragem | 05 |
 
-3) Link do vídeo executivo (5 min): https://www.loom.com/share/021d3b36611b43ca9d6bd0d188aac385
+### 18.3 Segmentação e perfis
 
----
+| Arquivo | Conteúdo | Notebook |
+|---|---|---:|
+| `reports/avaliacao_segmentacao.csv` | Silhueta, Davies-Bouldin, WCSS e tamanho dos grupos | 06 |
+| `reports/segmentacao_municipios.csv` | Segmento atribuído a cada município | 06 |
+| `reports/segmentacao_municipios.parquet` | Versão Parquet da segmentação | 06 |
+| `reports/catalogo_perfis_municipais.csv` | Descrição e nome de negócio dos perfis | 07 |
+| `reports/perfis_municipais_e_prioridades.csv` | Cruzamento entre perfil e risco projetado | 07 |
+| `reports/perfis_municipais_e_prioridades.parquet` | Versão Parquet dos perfis e prioridades | 07 |
 
+### 18.4 Interpretabilidade
 
+| Arquivo | Conteúdo | Notebook |
+|---|---|---:|
+| `reports/importancia_permutacao_aluno.csv` | Queda da AUC após embaralhar cada variável do modelo de aluno | 08 |
+| `reports/importancia_permutacao_municipio.csv` | Aumento do erro após embaralhar cada variável municipal | 08 |
 
+### 18.5 Relação com as perguntas do desafio
 
-
-
-
-
-
-
-
-
-
-
----
-
-## 18. Entregáveis
-
-- repositório Git completo;
-- código modular em `src/`;
-- notebooks executáveis;
-- README detalhado;
-- `requirements.txt` e `environment.yml`;
-- modelos persistidos;
-- ranking municipal de risco;
-- segmentação e perfis;
-- tabelas de importância;
-- gráficos;
-- apresentação executiva;
-- vídeo de até cinco minutos.
-
-Principais arquivos:
-
-```text
-reports/municipios_risco_2026.csv
-reports/segmentacao_municipios.csv
-reports/perfis_municipais_e_prioridades.csv
-reports/importancia_permutacao_aluno.csv
-reports/importancia_permutacao_municipio.csv
-```
+| Pergunta | Evidências principais |
+|---|---|
+| Quais fatores mais impactam a alfabetização? | `importancia_permutacao_aluno.csv` e `importancia_permutacao_municipio.csv` |
+| Quais municípios apresentam maior risco? | `municipios_risco_2026.csv` |
+| Quais regiões ou municípios possuem padrões semelhantes? | `segmentacao_municipios.csv`, `catalogo_perfis_municipais.csv` e `perfis_municipais_e_prioridades.csv` |
+| Como prever municípios que podem não atingir metas? | `comparacao_formulacoes_municipais.csv`, `diagnostico_modelo_municipal.json` e `municipios_risco_2026.csv` |
+| Quais variáveis mais influenciam os modelos? | arquivos de importância por permutação |
+| O modelo supera regras simples? | `robustez_modelo_vs_regras.csv` |
+| O ranking é estável? | `estabilidade_lista_2026.csv` |
 
 ---
 
@@ -1276,7 +1129,7 @@ reports/importancia_permutacao_municipio.csv
 - [x] Análise exploratória
 - [x] Hipóteses analíticas
 - [x] Imputação de valores ausentes
-- [x] Transformação de numéricas e categóricas
+- [x] Transformação de variáveis numéricas e categóricas
 - [x] Prevenção de data leakage
 - [x] Pré-processamento integrado ao modelo
 - [x] Validação agrupada por município
@@ -1289,13 +1142,16 @@ reports/importancia_permutacao_municipio.csv
 - [x] Limitações e aplicação prática
 - [x] Código modular em `src/`
 - [x] Dados brutos e caches fora do Git
-- [ ] Regenerar o notebook 09 com o mesmo artefato final do notebook 05
-- [ ] Confirmar execução completa em ambiente limpo
-- [ ] Confirmar todos os artefatos na branch `main`
-- [ ] Atualizar apresentação e vídeo com os números finais
 
 ---
 
-## Nota de uso responsável
+Entrega do Tech Challenge 2IAST - Fase3 - Alfabetização Brasil - Modelo Preditivo (GRUPO28)
 
-Este projeto é acadêmico e demonstrativo. As previsões devem apoiar triagem, investigação e priorização por equipes técnicas. Nenhuma saída deve ser usada isoladamente para decisões automáticas sobre alunos, escolas ou municípios.
+1) Repositório GitHub: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28
+
+2) Apresentação PowerPoint: https://github.com/FIAPCientistasDados/postech-2iast-fase3-modelo-preditivo-g28/tree/main/docs
+Arquivo: TechChallenge_Fase3.pptx
+
+3) Link do vídeo executivo (5 min): https://www.loom.com/share/021d3b36611b43ca9d6bd0d188aac385
+
+---
